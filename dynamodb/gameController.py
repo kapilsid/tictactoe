@@ -162,6 +162,109 @@ class GameController:
 
         return games
 
+def creatNewGame(self,gameId,creator,invitee):
+    now = str(datetime.now())
+    statusDate = "PENDING_" + now
+
+    item = Item(self.cm.getGamesTable(), data = {
+        "GameId" : gameId,
+        "HostId" : creator,
+        "OpponentId" : invitee,
+        "StatusDate" : statusDate,
+        "OUser" : creator,
+        "Turn" : invitee
+        })
+    return item.save()
+
+
+def getGame(self,gameId):
+    try:
+        item = self.cm.getGamesTable().get_item(GameId=gameId)
+    except ItemNotFound as inf:
+        return None
+    except JSONResponseError as jre:
+            return None
+
+    return item
+
+def getBoardState(self,item):
+    squares = ["TopLeft", "TopMiddle", "TopRight", "MiddleLeft", "MiddleMiddle", "MiddleRight", \
+                    "BottomLeft", "BottomMiddle", "BottomRight"]
+
+    state = []
+
+    for square in squares:
+        value = item[square]
+        if value == None:
+            state.append(" ")
+        else:
+            state.append(value)
+    
+    return state
+
+def checkForGameResult(self,board,item,current_player):
+    yourMarker = "X"
+    theirMarker = "O"
+
+    if current_player == item["OUser"]:
+        yourMarker = "O"
+        theirMarker = "X"
+    
+    winConditions = [[0,1,2],[3,4,5],[6,7,8]
+                     [0,3,6],[1,4,7],[2,5,8],
+                     [0,4,8],[2,4,6]]
+
+    for winCondition in winConditions:
+        b_zero = board[winCondition[0]]
+        b_one  = board[winCondition[1]]
+        b_two  = board[winCondition[2]]
+        if b_zero == b_one and \
+            b_one == b_two and \
+            b_two == yourMarker:
+                return "Win"
+
+        if b_zero == b_one and \
+                b_one == b_two and \
+                b_two == theirMarker:
+                    return "Lose"
+
+    if self.checkForTie(board):
+        return "Tie"
+
+    return  None
+
+def checkForTie(self, board):
+        for cell in board:
+            if cell == " ":
+                return False
+        return True
+
+
+def changeGameToFinishedState(self, item, result, current_user):
+        
+        #Happens if you're visiting a game that already has a winner
+        if item["Result"] != None:
+            return True
+
+        date = str(datetime.now())
+        status = "FINISHED"
+        item["StatusDate"] = status + "_" + date
+        item["Turn"] = "N/A"
+
+        if result == "Tie":
+            item["Result"] = result
+        elif result == "Win":
+            item["Result"] = current_user
+        else:
+            if item["HostId"] == current_user:
+                item["Result"] = item["OpponentId"]
+            else:
+                item["Result"] = item["HostId"]
+
+        return item.save()
+
+
+
 
 
                
