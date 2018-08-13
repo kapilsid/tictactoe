@@ -60,5 +60,5 @@ def create():
     if session.get('username',None) == None:
         flash("Need to login to create game")
         return redirect("/index")
-     return render_template("create.html",
+    return render_template("create.html",
                             user=session["username"])                            
