@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbtron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                  <h2>Pending Invitations</h2>
+                   <p>
+                       {% if invites == [] %}
+                       You current have no invites
+                       {% else %}
+                        <table>
+                            <tr>
+                                <td>From</td>
+                                <td>Accept?</td>
+                            </tr>
+                            {% for invite in invites%}
+                            <tr>
+                                <td>
+                                    {{invite.hostId}}
+                                    {{invite.date}}
+                                </td>    
+                                <td>
+                                    <form accept="/accept={{invite.gameId}}" method="post">
+                                          <button name="response" value={{invite.gameId}}>accept</button>   
+                                    </form>
+                                    <form accept="/reject={{invite.gameId}}" method="post">
+                                        <button name="response" value={{invite.gameId}}>reject</button>   
+                                  </form>
+                                </td>
+                            </tr>
+                            {% end for %}
+                        </table>
+
+                       {% endif %}
+                   </p> 
+            </div>
+            <div class="col-md-4">
+                <h2><b>Games In-Progress</b></h2>
+                {% if inprogress == [] %}
+                <p> You currently have no games in progress. </p>
+                {% else %}
+                <table>
+                    <tr>
+                        <td style="padding-right:125px"> <p class="columnLabels"> Game: </p> </td>
+                        <td> <p class="columnLabels"> Turn: </p> </td>
+                    </tr>
+                    {% for ipGame in inprogress %}
+                    <tr>
+                        <td style="padding-right:125px"> <a href="/game={{ipGame.gameId}}"> {{ipGame.getOpposingPlayer(user)}} </a> </td>
+                        <td> {{ipGame.turn}} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
