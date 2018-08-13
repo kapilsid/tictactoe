@@ -118,6 +118,21 @@ class GameController:
                                 oppGamesInProgress)
 
         return games
+    
+    def createNewGame(self,gameId,creator,invitee):
+        now = str(datetime.now())
+        statusDate = "PENDING_" + now
+
+        item = Item(self.cm.getGamesTable(), data = {
+            "GameId" : gameId,
+            "HostId" : creator,
+            "OpponentId" : invitee,
+            "StatusDate" : statusDate,
+            "OUser" : creator,
+            "Turn" : invitee
+            })
+        return item.save()
+
 
     def mergeQueries(self,host,opp,limit=10):
         games = []
@@ -162,20 +177,7 @@ class GameController:
 
         return games
 
-    def creatNewGame(self,gameId,creator,invitee):
-        now = str(datetime.now())
-        statusDate = "PENDING_" + now
-
-        item = Item(self.cm.getGamesTable(), data = {
-            "GameId" : gameId,
-            "HostId" : creator,
-            "OpponentId" : invitee,
-            "StatusDate" : statusDate,
-            "OUser" : creator,
-            "Turn" : invitee
-            })
-        return item.save()
-
+    
 
     def getGame(self,gameId):
         try:
