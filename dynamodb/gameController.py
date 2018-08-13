@@ -302,7 +302,7 @@ class GameController:
 
         expectations = {
             "StatusDate" : {
-                "AttributeList" : [{"S" : "IN_PROGRESS_"}],
+                "AttributeValueList" : [{"S" : "IN_PROGRESS_"}],
                 "ComparisonOperator": "BEGINS_WITH"
             },
             "Turn": {"Value": {"S":current_player}},
