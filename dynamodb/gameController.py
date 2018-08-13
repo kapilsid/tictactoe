@@ -99,6 +99,23 @@ class GameController:
 
         return invites
 
+    def getGameWithStatus(self,user,status):
 
-      
+        if user == None
+            return []
+
+        hostGamesInProgress = self.cm.getGamesTable().query(HostId__eq=user,
+                                            StatusDate__beginswith=status,
+                                            index="HostId-StatusDate-index",
+                                            limit=10)
+
+        oppGamesInProgress = self.cm.getGamesTable().query(OpponentId__eq=user,
+                                            StatusDate__beginswith=status,
+                                            index="OpponentId-StatusDate-index",
+                                            limit=10)
+
+        games = self.mergeQueries(hostGamesInProgress,
+                                oppGamesInProgress)
+
+        return games
                
