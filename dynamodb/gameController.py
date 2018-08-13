@@ -99,7 +99,7 @@ class GameController:
 
         return invites
 
-    def getGameWithStatus(self,user,status):
+    def getGamesWithStatus(self,user,status):
 
         if user == None:
             return []
