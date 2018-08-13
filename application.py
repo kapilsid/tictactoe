@@ -71,3 +71,72 @@ def createTable():
         time.sleep(3)
 
     return redirect('/index')
+
+@application.route('/play')
+def play():
+    form= request.form 
+    if form:
+        creator = session["username"]
+        gameId = str(uuid4())
+        invitee = form["invitee"].strip()
+
+    if not invitee or creator == invitee:
+        flash("Use valid a name (not empty or your name)")
+        return redirect("/create")
+    
+    if controller.createNewGame(gameId, creator, invitee):
+            return redirect("/game="+gameId)
+
+    flash("Something went wrong creating the game.")
+    return redirect("/create")
+
+@application.route('/game=<gameId>')
+def game(gameId):
+    if session.get("username", None) == None:
+        flash("Need to login")
+        return redirect("/index")
+
+    item = controller.getGame(gameId)
+    if item == None:
+        flash("That game does not exist.")
+        return redirect("/index")    
+
+    boardState = controller.getBoardState(item)
+    result = controller.checkForGameResult(boardState,item,session["username"])
+
+    if result != None:
+        if controller.changeGameToFinishedState(item,result,session["username"]) == False:
+            flash("Some error occured while trying to finish game.")
+
+    game = Game(item)
+    status = game.status
+    turn = game.turn
+
+    if game.getResult(session["username"]) == None:
+        if turn == game.o:
+            turn += " (O)"
+        else:
+            turn += " (X)"
+    
+    gameData = {'gameId': gameId, 'status': game.status, 'turn': game.turn, 'board': boardState};
+    gameJson = json.dumps(gameData)
+
+    return render_template("play.html",
+                            gameId=gameId,
+                            gameJson=gameJson,
+                            user=session["username"],
+                            status=status,
+                            turn=turn,
+                            opponent=game.getOpposingPlayer(session["username"]),
+                            result=result,
+                            TopLeft=boardState[0],
+                            TopMiddle=boardState[1],
+                            TopRight=boardState[2],
+                            MiddleLeft=boardState[3],
+                            MiddleMiddle=boardState[4],
+                            MiddleRight=boardState[5],
+                            BottomLeft=boardState[6],
+                            BottomMiddle=boardState[7],
+                            BottomRight=boardState[8])
+
+
