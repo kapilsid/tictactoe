@@ -5,10 +5,28 @@ from uuid                       import uuid4
 from models.game                    import Game
 import os, time, sys, argparse 
 
+import logging
+from logbeam import CloudWatchLogsHandler
 
 application = Flask(__name__)
 application.debug = True
 application.secret_key = str(uuid4())
+
+
+cw_handler = CloudWatchLogsHandler(
+    log_group_name='tictactoe',
+    log_stream_name='ticstream',
+    buffer_duration=10000,
+    batch_count=10,
+    batch_size=1048576
+)
+
+logger = logging.getLogger(__name__)
+
+logger.setLevel(logging.INFO)
+logger.addHandler(cw_handler)
+
+logger.info("Hello world!")
 
 cm = ConnectionManager()
 controller = GameController(cm)
