@@ -5,14 +5,12 @@ from uuid                       import uuid4
  
 
 
-
-
-
 application = Flask(__name__)
 application.debug = True
 application.secret_key = str(uuid4())
 
-
+cm = ConnectionManager()
+controller = GameController(cm)
 
 @application.route('/')
 @application.route('/index', methods=["GET", "POST"])

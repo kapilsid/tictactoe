@@ -1,5 +1,5 @@
 from .setupDynamoDB import getDynamoDBConnection,createGamesTable
-from boto.dynamodb.table import Table
+from boto.dynamodb2.table   import Table
 from uuid import uuid4
 
 class ConnectionManager:
@@ -8,12 +8,11 @@ class ConnectionManager:
        self.db = None
        self.gamesTable = None
        
-       self.db = getDynamoDBConnection(config=config,endpoint=endpoint,use_instance_metadata=use_intance_metadata)
+       self.db = getDynamoDBConnection(config=config,endpoint=endpoint,use_instance_metadata=use_instance_meta_data)
        
-
        self.setupGamesTable()
     
-    def setupGamesTable():
+    def setupGamesTable(self):
        try:
           self.gamesTable = Table("Games",connection=self.db)
        except Exception as e:

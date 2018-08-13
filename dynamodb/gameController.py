@@ -8,7 +8,7 @@ from datetime import datetime
 class GameController:
     
      def __init__(self,connectionManager):
-        self.cm = conectionManager
+        self.cm = connectionManager
         self.ResourceNotFound = 'com.amazonaws.dynamodb.v20120810#ResourceNotFoundException'
 
 
@@ -70,8 +70,34 @@ class GameController:
            return False
 
         return True
+    
+    def getGameInvites(self,user):
+        invites = []
+        if user == None:
+            return invites
 
-     
+        gameInvitesIndex = self.cm.getGamesTable().query(
+            OpponentId__eq = user,
+            StatusDate__beginswith="PENDING_",
+            index = "OpponentId-StatusDate-index",
+            limit=10 
+        )    
+        
+        for i in range(10):
+            try:
+                gameInvite = next(gameInvitesIndex)
+            except StopIteration as si:
+                break
+            except ValidationException as ve:
+                break
+            except JSONResponseError as jre:
+                 if jre.body.get(u'__type', None) == self.ResourceNotFound:
+                    return None
+                else:
+                    raise jre
+            invites.append(gameInvite)
+
+        return invites
 
 
       
