@@ -9,26 +9,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Tic Tac Toe</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="/">Tic Tac Toe</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    {% if User == None %}
-                    <form class="navbar-form navbar-right" action="/index" method="post">
-                        <div class="form-group">
-                          <input type="text" name="username" placeholder="i.e. John" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Log In</button>
-                      </form>
-                      {% else %}
-                        {% if user != "" %}
-                            <a href="/logout" class="logout"> Logout? </a>
-                            <p class="logout" style="display:inline;color:white;padding-right:5px"> Hi {{user}},  </p>
-                        {% endif %}
-                    {% endif %}    
-                </div>
+                {% if user == None %}
+                <form class="navbar-form navbar-right" action="/index" method="post">
+                    <div class="form-group">
+                    <input type="text" name="username" placeholder="i.e. John" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Log In</button>
+                </form>
+                {% else %}
+                    {% if user != "" %}
+                        <a href="/logout" class="logout"> Logout? </a>
+                        <p class="logout" style="display:inline;color:white;padding-right:5px"> Hi {{user}},  </p>
+                    {% endif %}
+                {% endif %}
+                </div><!--/.navbar-collapse -->
             </div>
         </div>
         {% block content %} {% endblock %}
