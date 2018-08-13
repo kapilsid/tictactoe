@@ -116,7 +116,6 @@ class GameController:
 
         games = self.mergeQueries(hostGamesInProgress,
                                 oppGamesInProgress)
-
         return games
     
     def createNewGame(self,gameId,creator,invitee):
