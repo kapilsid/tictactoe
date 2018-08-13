@@ -5,9 +5,7 @@ from uuid                       import uuid4
 from models.game                    import Game
 import os, time, sys, argparse 
 import logging
-logging.basicConfig(filename='tictactoe.log',level=logging.DEBUG)
-logging.debug('This message should go to the log file')
-
+logger = logging.getLogger(__name__)
 
 application = Flask(__name__)
 application.debug = True
@@ -81,6 +79,9 @@ def createTable():
 @application.route('/play')
 def play():
     form= request.form 
+    logger.info(session["username"])
+    logger.info(form["invitee"])
+    
     if form:
         creator = session["username"]
         gameId = str(uuid4())
