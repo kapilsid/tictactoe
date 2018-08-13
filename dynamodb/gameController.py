@@ -7,12 +7,12 @@ from datetime import datetime
 
 class GameController:
     
-     def __init__(self,connectionManager):
+    def __init__(self,connectionManager):
         self.cm = connectionManager
         self.ResourceNotFound = 'com.amazonaws.dynamodb.v20120810#ResourceNotFoundException'
 
 
-     def createGame(self, gameId, creator, invitee):
+    def createGame(self, gameId, creator, invitee):
         now = str(datetime.now())
         statusDate = "PENDING_" + now
         item = Item(self.cm.getGameTable(), data = {
@@ -26,14 +26,14 @@ class GameController:
         return item.save() 
     
       
-     def checkIfTableIsActive(self) :
+    def checkIfTableIsActive(self) :
         description = self.cm.db.describe_table('Games')
         status = description['Table']['TableStatus']
 
         return status == 'ACTIVE' 
   
 
-     def gameGame(self,gameId):
+    def gameGame(self,gameId):
         try:
            item = self.cm.getGamesTable().get_item(GameId=gameId)
         except ItemNotFound  as inf:
@@ -44,7 +44,7 @@ class GameController:
         return item
 
 
-     def acceptGameInvite(self,gameId):
+    def acceptGameInvite(self,gameId):
         
         key = { "GameId": {"S" : game["GameId"]}  }
         date = str(datetime.now())
