@@ -76,7 +76,7 @@ def createTable():
 
     return redirect('/index')
 
-@application.route('/play')
+@application.route('/play', methods=["POST"])
 def play():
     form= request.form 
     logger.info(session["username"])
