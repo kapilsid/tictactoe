@@ -194,4 +194,12 @@ def selectSquare(gameId):
         flash("This is not a valid game.")
         return redirect("/index")
 
-    if controller.
+    if controller.updateBoardAndTurn(item, value, session["username"]) == False:
+        flash("You have selected a square either when \
+                it's not your turn, \
+                the square is already selected, \
+                or the game is not 'In-Progress'.",
+                "updateError")
+        return redirect("/game="+gameId)
+
+    return redirect("/game="+gameId)

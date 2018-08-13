@@ -269,7 +269,7 @@ class GameController:
 
             return item.save()
 
-    def updateBoardAndTurn(self, item, current_player):
+    def updateBoardAndTurn(self, item,position, current_player):
         player_one = item["HostId"]
         player_two = item["OpponentId"]
         gameId = item["GameId"]
