@@ -3,10 +3,7 @@ from boto.dynamodb2.fields import KeysOnlyIndex, GlobalAllIndex, HashKey, RangeK
 from boto.dynamodb2.layer1 import DynamoDBConnection
 from boto.dynamodb2.table import Table
 
-try:
-    from urllib.request import urlopen.decode('utf-8')
-except ImportError:
-    from urllib2 import urlopen
+from urllib2 import urlopen
 import json
 
 def getDynamoDBConnection (config=None, endpoint=None, port=None, local=False, use_instance_metadata=False):
