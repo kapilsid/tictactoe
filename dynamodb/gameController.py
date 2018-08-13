@@ -4,7 +4,9 @@ from boto.dynamodb2.items import Item
 from boto.dynamodb2.table import Table
 from datetime import datetime
 import logging
+logging.basicConfig(filename='tictactoe.log',level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
 
 
 class GameController:

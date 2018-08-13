@@ -5,7 +5,9 @@ from uuid                       import uuid4
 from models.game                    import Game
 import os, time, sys, argparse 
 import logging
+logging.basicConfig(filename='tictactoe.log',level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
 
 application = Flask(__name__)
 application.debug = True
