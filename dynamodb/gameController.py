@@ -50,15 +50,16 @@ class GameController:
         
         key = { "GameId": {"S" : game["GameId"]}  }
         date = str(datetime.now())
-        statusDate = "PROGRESS_" + date
+        status = "IN_PROGRESS_"
+        statusDate = status + date
         attributeUpdates =  {"StatusDate" : {
                                 "ACTION":"PUT", 
                                 "VALUE": {"S":statusDate}
                                 }
                             } 
         expectations = {"StatusDate" : {
-                             "AtrributeValueList" : [{"S" : "PENDOMG_"}],
-                             "ComparisonOperator" : "BEGIN_WITH"
+                             "AtrributeValueList" : [{"S" : "PENDING_"}],
+                             "ComparisonOperator" : "BEGINS_WITH"
                           }                      
                        }  
                          
