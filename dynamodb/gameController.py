@@ -128,7 +128,7 @@ class GameController:
             if game_one == None:
                 try:
                     game_one = next(host)
-                expect StopIteration as si:
+                except StopIteration as si:
                     if game_two != None:
                         games.append(next(opp))
                     
