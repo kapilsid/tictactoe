@@ -91,7 +91,7 @@ class GameController:
             except ValidationException as ve:
                 break
             except JSONResponseError as jre:
-                 if jre.body.get(u'__type', None) == self.ResourceNotFound:
+                if jre.body.get(u'__type', None) == self.ResourceNotFound:
                     return None
                 else:
                     raise jre
