@@ -3,6 +3,8 @@ from boto.dynamodb2.exceptions import ConditionalCheckFailedException, ItemNotFo
 from boto.dynamodb2.items import Item
 from boto.dynamodb2.table import Table
 from datetime import datetime
+import logging
+logger = logging.getLogger(__name__)
 
 
 class GameController:
@@ -121,16 +123,18 @@ class GameController:
     def createNewGame(self,gameId,creator,invitee):
         now = str(datetime.now())
         statusDate = "PENDING_" + now
-
-        item = Item(self.cm.getGamesTable(), data = {
-            "GameId" : gameId,
-            "HostId" : creator,
-            "OpponentId" : invitee,
-            "StatusDate" : statusDate,
-            "OUser" : creator,
-            "Turn" : invitee
-            })
-            
+        try :
+            item = Item(self.cm.getGamesTable(), data = {
+                "GameId" : gameId,
+                "HostId" : creator,
+                "OpponentId" : invitee,
+                "StatusDate" : statusDate,
+                "OUser" : creator,
+                "Turn" : invitee
+                })
+        except Exception as ex:
+            logger.debug( ex.msg)
+            return None
         return item.save()
 
 

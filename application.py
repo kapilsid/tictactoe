@@ -4,12 +4,9 @@ from dynamodb.gameController    import GameController
 from uuid                       import uuid4
 from models.game                    import Game
 import os, time, sys, argparse 
-
-import watchtower,logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-logger.addHandler(watchtower.CloudWatchLogHandler())
-logger.info("Hi")
+import logging
+logging.basicConfig(filename='tictactoe.log',level=logging.DEBUG)
+logging.debug('This message should go to the log file')
 
 
 application = Flask(__name__)
