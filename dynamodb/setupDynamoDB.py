@@ -4,7 +4,7 @@ from boto.dynamodb2.layer1 import DynamoDBConnection
 from boto.dynamodb2.table import Table
 
 try:
-    from urllib.request import urlopen
+    from urllib.request import urlopen.decode('utf-8')
 except ImportError:
     from urllib2 import urlopen
 import json
@@ -13,7 +13,7 @@ def getDynamoDBConnection (config=None, endpoint=None, port=None, local=False, u
     params = {
             'is_secure': True
             }
-    response = urlopen('http://169.254.169.254/latest/dynamic/instance-identity/document').read()
+    response = urlopen('http://169.254.169.254/latest/dynamic/instance-identity/document').read().decode('utf-8')
             
     doc = json.loads(response)
     params['host'] = 'dynamodb.%s.amazonaws.com' % (doc['region'])
