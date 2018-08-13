@@ -101,7 +101,7 @@ class GameController:
 
     def getGameWithStatus(self,user,status):
 
-        if user == None
+        if user == None:
             return []
 
         hostGamesInProgress = self.cm.getGamesTable().query(HostId__eq=user,
