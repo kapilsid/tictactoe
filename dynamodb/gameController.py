@@ -51,7 +51,7 @@ class GameController:
         statusDate = "PROGRESS_" + date
         attributeUpdates =  {"StatusDate" : {
                                 "ACTION":"PUT", 
-                                "VALUE": {"S":StatusDate}
+                                "VALUE": {"S":statusDate}
                                 }
                             } 
         expectations = {"StatusDate" : {
@@ -130,6 +130,7 @@ class GameController:
             "OUser" : creator,
             "Turn" : invitee
             })
+            
         return item.save()
 
 

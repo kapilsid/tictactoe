@@ -55,7 +55,7 @@ def index():
             invites=inviteGames,
             inprogress=inProgressGames,
             finished=fs)
-            
+
 @application.route('/create')
 def create():
     if session.get('username',None) == None:
@@ -63,6 +63,7 @@ def create():
         return redirect("/index")
     return render_template("create.html",
                             user=session["username"])  
+
 
 @application.route('/table', methods=["GET", "POST"])
 def createTable():
@@ -87,8 +88,8 @@ def play():
     try:
         if controller.createNewGame(gameId, creator, invitee):
             return redirect("/game="+gameId)
-    except Exception as e:
-        flash(e.message)
+    except Exception as ex:
+        flash("could not create new game .. or redirect")
 
     flash("Something went wrong creating the game.")
     return redirect("/create")
@@ -121,7 +122,7 @@ def game(gameId):
         else:
             turn += " (X)"
     
-    gameData = {'gameId': gameId, 'status': game.status, 'turn': game.turn, 'board': boardState};
+    gameData = {'gameId': gameId, 'status': game.status, 'turn': game.turn, 'board': boardState}
     gameJson = json.dumps(gameData)
 
     return render_template("play.html",
