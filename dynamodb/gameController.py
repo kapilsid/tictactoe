@@ -53,8 +53,8 @@ class GameController:
         status = "IN_PROGRESS_"
         statusDate = status + date
         attributeUpdates =  {"StatusDate" : {
-                                "ACTION":"PUT", 
-                                "VALUE": {"S":statusDate}
+                                "Action":"PUT", 
+                                "Value": {"S":statusDate}
                                 }
                             } 
         expectations = {"StatusDate" : {
@@ -67,8 +67,6 @@ class GameController:
            self.cm.db.update_item("Games",key=key,
                                   attribute_updates=attributeUpdates,
                                   expected=expectations)
-              
-
         except ConditionalCheckFailedException as ccfe:
            return False
 
