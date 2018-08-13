@@ -9,7 +9,7 @@ except ImportError:
     from urllib2 import urlopen
 import json
 
-def getDynamoDBConnection ():
+def getDynamoDBConnection (config=None, endpoint=None, port=None, local=False, use_instance_metadata=False):
     params = {
             'is_secure': True
             }
