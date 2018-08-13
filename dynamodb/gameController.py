@@ -118,4 +118,50 @@ class GameController:
                                 oppGamesInProgress)
 
         return games
+
+    def mergeQueries(self,host,opp,limit=10):
+        games = []
+        game_one = None
+        game_two = None
+
+        while len(games) <= limit:
+            if game_one == None:
+                try:
+                    game_one = next(host)
+                expect StopIteration as si:
+                    if game_two != None:
+                        games.append(next(opp))
+                    
+                    for rest in opp:
+                        if len(games) == limit:
+                            break
+                        else:
+                            games.append(rest)
+                    return games
+
+            if game_two == None:
+                try:
+                    game_two = next(opp)
+                except StopIteration as si:
+                    if game_one != None:
+                        games.append(game_one)
+
+                    for rest in host:
+                        if len(games) == limit:
+                            break
+                        else:
+                            games.append(rest)
+                    return games
+
+            if game_one > game_two:
+                games.append(game_one)
+                game_one = None
+            else:
+                games.append(game_two)
+                game_two = None
+
+        return games
+
+
+
                
