@@ -55,6 +55,7 @@ def index():
             invites=inviteGames,
             inprogress=inProgressGames,
             finished=fs)
+            
 @application.route('/create')
 def create():
     if session.get('username',None) == None:
@@ -83,9 +84,11 @@ def play():
     if not invitee or creator == invitee:
         flash("Use valid a name (not empty or your name)")
         return redirect("/create")
-    
-    if controller.createNewGame(gameId, creator, invitee):
-        return redirect("/game="+gameId)
+    try:
+        if controller.createNewGame(gameId, creator, invitee):
+            return redirect("/game="+gameId)
+    except Exception as e:
+        flash(e.message)
 
     flash("Something went wrong creating the game.")
     return redirect("/create")
