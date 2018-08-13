@@ -1,0 +1,19 @@
+{% extends "board.hrml" %}
+
+{% block addon %}
+
+    <div>
+        <p> GameId: {{gameId}} </p>
+        <p> Opponent:   {{opponent}}   </p>
+        <p> Status: {{status}} </p>
+        <p> Turn:   {{turn}}   </p>
+    </div>
+    {% if status == 'FINISHED' %}
+    <div>
+        <form class="test" action="/play" method="post">
+            <input type="hidden" name="invitee" value="{{opponent}}" />
+            <button type="submit" class="customizedInput">Play Again!</button>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

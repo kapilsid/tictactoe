@@ -2,6 +2,28 @@
 {% block content %}
 <div class="jumbtron">
     <div class="container">
+            <div style="padding-top:10px">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-info">
+                        <center>
+                            {{ msg }}
+                        </center>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            </div>
+            <center>
+                <h1>
+                    <a href="/create">
+                        <button style="height:75;width:200px;font-size:40px" class="btn btn-success">CREATE</button>
+                    </a>
+                </h1>
+            </center>
+        </div>
+    <div class="container">
         <div class="row">
             <div class="col-md-4">
                   <h2>Pending Invitations</h2>
