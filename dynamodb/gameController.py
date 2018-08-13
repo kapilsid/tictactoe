@@ -63,12 +63,14 @@ class GameController:
                           }                      
                        }  
                          
+          
         try:
            self.cm.db.update_item("Games",key=key,
                                   attribute_updates=attributeUpdates,
                                   expected=expectations)
         except ConditionalCheckFailedException as ccfe:
-           return False
+            logger.debug(ccfe.msg)            
+            return False
 
         return True
     

@@ -153,15 +153,20 @@ def game(gameId):
 def accept(invite):
     gameId = request.form["response"]
     game = controller.getGame(gameId)
+    logger.debug(gameId)
 
     if game == None:
         flash("That game does not exist anymore.")
         redirect("/index")
 
+    logger.debug("dasdasdasd")
+    
     if not controller.acceptGameInvite(game):
         flash("Error validating the game...")
         redirect("/index")
 
+    logger.debug("succedded...")
+    
     return redirect("/game="+game["GameId"])
 
 @application.route('/reject=<invite>', methods=["POST"])
