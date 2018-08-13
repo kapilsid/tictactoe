@@ -61,4 +61,13 @@ def create():
         flash("Need to login to create game")
         return redirect("/index")
     return render_template("create.html",
-                            user=session["username"])                            
+                            user=session["username"])  
+
+@application.route('/table', methods=["GET", "POST"])
+def createTable():
+    cm.createGamesTable()
+
+    while controller.checkIfTableIsActive() == False:
+        time.sleep(3)
+
+    return redirect('/index')
