@@ -46,7 +46,7 @@ class GameController:
         return item
 
 
-    def acceptGameInvite(self,gameId):
+    def acceptGameInvite(self,game):
         
         key = { "GameId": {"S" : game["GameId"]}  }
         date = str(datetime.now())
