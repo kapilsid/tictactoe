@@ -152,7 +152,7 @@ def game(gameId):
 @application.route('/accept=<invite>', methods=["POST"])
 def accept(invite):
     gameId = request.form["response"]
-    game = controller.gameGame(gameId)
+    game = controller.getGame(gameId)
 
     if game == None:
         flash("That game does not exist anymore.")
@@ -194,4 +194,4 @@ def selectSquare(gameId):
         flash("This is not a valid game.")
         return redirect("/index")
 
-    
+    if controller.
