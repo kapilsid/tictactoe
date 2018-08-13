@@ -269,7 +269,55 @@ class GameController:
 
             return item.save()
 
+    def updateBoardAndTurn(self, item, current_player):
+        player_one = item["HostId"]
+        player_two = item["OpponentId"]
+        gameId = item["GameId"]
+        statusDate = item["StatusDate"]
+        date = statusDate.split("_")[1]
 
+        representation = "X"
+        if item["OUser"] == current_player:
+            representation = "O"
+        
+        if current_player == player_one:
+            next_player = player_two
+        else:
+            next_player = player_one
+
+        key = {
+            "GameId" : {"S" : gameId}
+        }
+        
+        attributeUpdates = {
+            position : {
+                "Action" : "PUT",
+                "Value" : {"S" : representation}
+            },
+            "Turn" :{
+                "Action" : "PUT",
+                "Value" : {"S" : next_player}
+            }
+        }
+
+        expectations = {
+            "StatusDate" : {
+                "AttributeList" : [{"S" : "IN_PROGRESS_"}],
+                "ComparisonOperator": "BEGINS_WITH"
+            },
+            "Turn": {"Value": {"S":current_player}},
+            position : {"Exists":False}
+        }
+
+        try:
+            self.cm.db.update_item("Games",key = key,
+                   attribute_updates = attributeUpdates,
+                   expected = expectations 
+                )
+        except ConditionalCheckFailedException as ccfe:
+            return False
+
+        return True
 
 
 

@@ -149,3 +149,49 @@ def game(gameId):
                             BottomRight=boardState[8])
 
 
+@application.route('/accept=<invite>', methods=["POST"])
+def accept(invite):
+    gameId = request.form["response"]
+    game = controller.gameGame(gameId)
+
+    if game == None:
+        flash("That game does not exist anymore.")
+        redirect("/index")
+
+    if not controller.acceptGameInvite(game):
+        flash("Error validating the game...")
+        redirect("/index")
+
+    return redirect("/game="+game["GameId"])
+
+@application.route('/reject=<invite>', methods=["POST"])
+def reject(invite):
+    """
+    Method associated with the route '/reject=<invite>' where invite
+    is the game that you have chosen to reject.
+    Deletes the item associated with the invite from the Games table.
+    """
+    gameId = request.form["response"]
+    game = controller.getGame(gameId)
+
+    if game == None:
+        flash("That game doesn't exist anymore.")
+        redirect("/index")
+
+    if not controller.rejectGameInvite(game):
+        flash("Something went wrong when deleting invite.")
+        redirect("/index")
+
+    return redirect("/index")
+
+@application.route('/select=<gameId>', methods=["POST"])
+def selectSquare(gameId):
+    value = request.form["cell"]
+
+    item = controller.getGame(gameId)
+
+    if item == None:
+        flash("This is not a valid game.")
+        return redirect("/index")
+
+    
