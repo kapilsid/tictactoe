@@ -13,7 +13,7 @@ def getDynamoDBConnection (config=None, endpoint=None, port=None, local=False, u
     params = {
             'is_secure': True
             }
-    response = urlopen('http://169.254.169.254/latest/dynamic/instance-identity/document')
+    response = urlopen('http://169.254.169.254/latest/dynamic/instance-identity/document').read()
             
     doc = json.loads(response)
     params['host'] = 'dynamodb.%s.amazonaws.com' % (doc['region'])
