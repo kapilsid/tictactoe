@@ -4,9 +4,8 @@ from boto.dynamodb2.items import Item
 from boto.dynamodb2.table import Table
 from datetime import datetime
 import logging
-logging.basicConfig(filename='tictactoe.log',level=logging.DEBUG)
+logging.basicConfig(filename='tictactoe.log',level=logging.ERROR)
 logger = logging.getLogger(__name__)
-
 
 
 class GameController:
@@ -50,19 +49,22 @@ class GameController:
 
     def acceptGameInvite(self,game):
         
-        key = { "GameId": {"S" : game["GameId"]}  }
+        key = { 
+            "GameId": {"S" : game["GameId"]}  
+            }
         date = str(datetime.now())
         status = "IN_PROGRESS_"
         statusDate = status + date
-        attributeUpdates =  {"StatusDate" : {
-                                "Action":"PUT", 
-                                "Value": {"S":statusDate}
-                                }
-                            } 
+        attributeUpdates =  {
+                        "StatusDate" : {
+                            "Action":"PUT", 
+                            "Value": {"S":statusDate}
+                            }
+                        } 
+        
         expectations = {"StatusDate" : {
                              "AtrributeValueList" : [{"S" : "PENDING_"}],
-                             "ComparisonOperator" : "BEGINS_WITH"
-                          }                      
+                             "ComparisonOperator" : "BEGINS_WITH"}                      
                        }  
                          
           
@@ -71,7 +73,7 @@ class GameController:
                                   attribute_updates=attributeUpdates,
                                   expected=expectations)
         except ConditionalCheckFailedException as ccfe:
-            logger.debug(ccfe.msg)            
+            logger.error(ccfe.msg)            
             return False
 
         return True

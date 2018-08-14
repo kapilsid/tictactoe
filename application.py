@@ -5,7 +5,7 @@ from uuid                       import uuid4
 from models.game                    import Game
 import os, time, sys, argparse 
 import logging
-logging.basicConfig(filename='tictactoe.log',level=logging.DEBUG)
+logging.basicConfig(filename='tictactoe.log',level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 
