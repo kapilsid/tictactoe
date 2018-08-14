@@ -147,9 +147,9 @@ def game(gameId):
                             BottomRight=boardState[8])
 
 
-@application.route('/accept=<invite>', methods=["POST"])
-def accept(invite):
-    gameId = request.form["response"]
+@application.route('/accept/<invite>', methods=["POST"])
+def accept(gameId):
+    #gameId = request.form["response"]
     game = controller.getGame(gameId)
     logging.exception(gameId)
   

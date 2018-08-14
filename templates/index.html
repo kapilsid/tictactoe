@@ -44,10 +44,10 @@
                                         <div> {{invite.date}} </div>
                                     </td>
                                     <td>
-                                    <form action="/accept={{invite.gameId}}" method="post">
+                                    <form action="/accept/{{invite.gameId}}" method="get">
                                         <button name="response" value={{invite.gameId}}> accept </button> 
                                     </form>
-                                    <form action="/reject={{invite.gameId}}" method="post" >
+                                    <form action="/reject/{{invite.gameId}}" method="get" >
                                         <button name="response" value={{invite.gameId}}> reject </button>
                                     </form>
                                     </td>
