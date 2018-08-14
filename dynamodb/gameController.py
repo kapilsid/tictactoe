@@ -48,7 +48,7 @@ class GameController:
 
 
     def acceptGameInvite(self,game):
-        
+        logger.error(game["GameId"])    
         key = { 
             "GameId": {"S" : game["GameId"]}  
             }

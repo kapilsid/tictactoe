@@ -81,8 +81,6 @@ def createTable():
 @application.route('/play', methods=["POST"])
 def play():
     form= request.form 
-    logger.info(session["username"])
-    logger.info(form["invitee"])
     
     if form:
         creator = session["username"]
@@ -155,19 +153,20 @@ def game(gameId):
 def accept(invite):
     gameId = request.form["response"]
     game = controller.getGame(gameId)
-    logger.debug(gameId)
+    logger.error(gameId)
 
     if game == None:
         flash("That game does not exist anymore.")
         redirect("/index")
 
-    logger.debug("dasdasdasd")
+    logger.error("dasdasdasd")
     
     if not controller.acceptGameInvite(game):
         flash("Error validating the game...")
+        logger.error("Error validating the game...")
         redirect("/index")
 
-    logger.debug("succedded...")
+    logger.error("succedded...")
     
     return redirect("/game="+game["GameId"])
 
