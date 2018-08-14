@@ -204,3 +204,17 @@ def selectSquare(gameId):
         return redirect("/game="+gameId)
 
     return redirect("/game="+gameId)
+
+@application.route('/gameData=<gameId>')
+def gameData(gameId):
+    
+    item = controller.getGame(gameId)
+    boardState = controller.getBoardState(item)
+    if item == None:
+        return jsonify(error='That game does not exist')
+
+    game = Game(item)
+    return jsonify(gameId = gameId,
+                   status = game.status,
+                   turn = game.turn,
+                   board = boardState)
