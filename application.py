@@ -147,7 +147,7 @@ def game(gameId):
                             BottomRight=boardState[8])
 
 
-@application.route('/accept/<invite>', methods=["POST","GET"])
+@application.route('/accept/<gameId>', methods=["POST","GET"])
 def accept(gameId):
     #gameId = request.form["response"]
     game = controller.getGame(gameId)
