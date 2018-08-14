@@ -61,7 +61,7 @@ class GameController:
                         } 
         
         expectations = {"StatusDate" : {
-                             "AtrributeValueList" : [{"S" : "PENDING_"}],
+                             "AttributeValueList" : [{"S" : "PENDING_"}],
                              "ComparisonOperator" : "BEGINS_WITH"}                      
                        }  
                          
