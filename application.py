@@ -171,11 +171,7 @@ def accept(invite):
 
 @application.route('/reject=<invite>', methods=["POST"])
 def reject(invite):
-    """
-    Method associated with the route '/reject=<invite>' where invite
-    is the game that you have chosen to reject.
-    Deletes the item associated with the invite from the Games table.
-    """
+   
     gameId = request.form["response"]
     game = controller.getGame(gameId)
 
