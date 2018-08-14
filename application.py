@@ -5,8 +5,6 @@ from uuid                       import uuid4
 from models.game                    import Game
 import os, time, sys, argparse 
 import logging
-logging.basicConfig(filename='tictactoe.log',level=logging.ERROR)
-logger = logging.getLogger(__name__)
 
 
 application = Flask(__name__)
@@ -153,20 +151,21 @@ def game(gameId):
 def accept(invite):
     gameId = request.form["response"]
     game = controller.getGame(gameId)
-    logger.error(gameId)
+    logging.exception(gameId)
+  
 
     if game == None:
         flash("That game does not exist anymore.")
         redirect("/index")
 
-    logger.error("dasdasdasd")
+    logging.exception("dasdasdasd")
     
     if not controller.acceptGameInvite(game):
         flash("Error validating the game...")
-        logger.error("Error validating the game...")
+        logging.exception("Error validating the game...")
         redirect("/index")
 
-    logger.error("succedded...")
+    logging.exception("succedded...")
     
     return redirect("/game="+game["GameId"])
 
